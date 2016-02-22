@@ -82,6 +82,8 @@ void Render::renderLoop()
   boolean quit = false;
   boolean f1 = true; 
   boolean f2 = false;
+  float ds = 0.02f;
+  float dphi = 0.004f;
   
   memset(key, 0, sizeof(key));
   
@@ -136,45 +138,45 @@ void Render::renderLoop()
     {
       //if (key[SDLK_LEFT]) stern->mModel.rotateZ(-0.01);
       //if (key[SDLK_RIGHT]) stern->mModel.rotateZ(0.01);
-      if (key[SDLK_LEFT]) stern->mModel = stern->mModel * Matrix4().getRotZ(-0.01);
-      if (key[SDLK_RIGHT]) stern->mModel = stern->mModel * Matrix4().getRotZ(0.01);
-      if (key[SDLK_UP]) stern->mModel = Matrix4().getRotZ(-0.01) * stern->mModel;
-      if (key[SDLK_DOWN]) stern->mModel = Matrix4().getRotZ(0.01) * stern->mModel;
+      if (key[SDLK_LEFT]) stern->mModel = stern->mModel * Matrix4().getRotZ(-0.005);
+      if (key[SDLK_RIGHT]) stern->mModel = stern->mModel * Matrix4().getRotZ(0.005);
+      if (key[SDLK_UP]) stern->mModel = Matrix4().getRotZ(-0.005) * stern->mModel;
+      if (key[SDLK_DOWN]) stern->mModel = Matrix4().getRotZ(0.005) * stern->mModel;
     }
     if(f2)
     {
-      if (key[SDLK_w]) camera->translate(0.0, 0.0, 0.02);
-      if (key[SDLK_s]) camera->translate(0.0, 0.0, -0.02);
-      if (key[SDLK_a]) camera->translate(0.02, 0.0, 0.0);
-      if (key[SDLK_d]) camera->translate(-0.02, 0.0, 0.0);
+      if (key[SDLK_w]) camera->translate(0.0, 0.0, ds);
+      if (key[SDLK_s]) camera->translate(0.0, 0.0, -ds);
+      if (key[SDLK_a]) camera->translate(ds, 0.0, 0.0);
+      if (key[SDLK_d]) camera->translate(-ds, 0.0, 0.0);
       if (key[SDLK_y])
       {
 	rotAxis = camera->getXAxis() * camera->getZAxis();
-	camera->translate(rotAxis.x*0.02, rotAxis.y*0.02, rotAxis.z*0.02);
+	camera->translate(rotAxis.x*ds, rotAxis.y*ds, rotAxis.z*ds);
       }
       if (key[SDLK_x])
       {
 	rotAxis = camera->getXAxis() * camera->getZAxis();
-	camera->translate(rotAxis.x*-0.02, rotAxis.y*-0.02, rotAxis.z*-0.02);
+	camera->translate(rotAxis.x*-ds, rotAxis.y*-ds, rotAxis.z*-ds);
       }
       if (key[SDLK_LEFT])
       {
 	rotAxis = camera->getXAxis() * camera->getZAxis();
-	*camera = Matrix4().getRotX(rotAxis.x*0.005) * *camera;
-	*camera = Matrix4().getRotY(rotAxis.y*0.005) * *camera;
-	*camera = Matrix4().getRotZ(rotAxis.z*-0.005) * *camera;
+	*camera = Matrix4().getRotX(rotAxis.x*dphi) * *camera;
+	*camera = Matrix4().getRotY(rotAxis.y*dphi) * *camera;
+	*camera = Matrix4().getRotZ(rotAxis.z*-dphi) * *camera;
       }
       if (key[SDLK_RIGHT])
       {
 	rotAxis = camera->getXAxis() * camera->getZAxis();
-	*camera = Matrix4().getRotX(rotAxis.x*-0.005) * *camera;
-	*camera = Matrix4().getRotY(rotAxis.y*-0.005) * *camera;
-	*camera = Matrix4().getRotZ(rotAxis.z*0.005) * *camera;
+	*camera = Matrix4().getRotX(rotAxis.x*-dphi) * *camera;
+	*camera = Matrix4().getRotY(rotAxis.y*-dphi) * *camera;
+	*camera = Matrix4().getRotZ(rotAxis.z*dphi) * *camera;
       }
-      if (key[SDLK_UP]) *camera = Matrix4().getRotX(-0.005) * *camera;
-      if (key[SDLK_DOWN]) *camera = Matrix4().getRotX(0.005) * *camera;
+      if (key[SDLK_UP]) *camera = Matrix4().getRotX(-dphi) * *camera;
+      if (key[SDLK_DOWN]) *camera = Matrix4().getRotX(dphi) * *camera;
     }
     
-    SDL_Delay(5);
+    //SDL_Delay(3);
   }
 }

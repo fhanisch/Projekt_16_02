@@ -35,7 +35,7 @@ int main(int argc, char **argv)
   Render *render = new Render(&event);
   
   cout << "Programm: " << argv[0]+2 << endl;
-  cout << "Author: fh" << endl;
+  cout << "Autor: fh" << endl;
   if (initOpenGLWindow(argv[0]+2)!=0) return 1;
   cout << "SDL initialized" << endl;
   if (glewInit()!=0) return 1;
