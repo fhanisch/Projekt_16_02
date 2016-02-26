@@ -1,7 +1,6 @@
 #include <cstdio>
 #include <cstdlib>
-#include <GL/glew.h>
-#include <GL/gl.h>
+#include "ogl.hpp"
 #include "Shader.hpp"
 
 typedef unsigned int uint;

@@ -1,4 +1,4 @@
-#include <GL/gl.h>
+#include "ogl.hpp"
 #include "Lines.hpp"
 
 Lines::Lines(GLuint sp) : RenderObject()

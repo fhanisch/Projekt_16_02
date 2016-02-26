@@ -1,6 +1,6 @@
 #include <cstdio>
 #include <stdlib.h>
-#include <GL/gl.h>
+#include "ogl.hpp"
 #include "Texture.hpp"
 
 Texture::Texture(GLchar* filename, GLenum texindex)

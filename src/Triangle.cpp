@@ -1,4 +1,4 @@
-#include <GL/gl.h>
+#include "ogl.hpp"
 #include "Triangle.hpp"
 
 Triangle::Triangle(GLuint sp) : RenderObject()

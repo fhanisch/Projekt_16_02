@@ -1,4 +1,4 @@
-#include <GL/gl.h>
+#include "ogl.hpp"
 #include "Plane.hpp"
 
 Plane::Plane(GLuint sp, Matrix4 *cam) : RenderObject()

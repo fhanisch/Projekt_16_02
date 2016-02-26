@@ -1,4 +1,4 @@
-#include <GL/gl.h>
+#include "ogl.hpp"
 #include "Circle.hpp"
 
 Circle::Circle(GLuint sp) : RenderObject()

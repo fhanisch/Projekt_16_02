@@ -1,4 +1,4 @@
-#include <GL/gl.h>
+#include "ogl.hpp"
 #include "Rectangle.hpp"
 
 Rectangle::Rectangle(GLuint sp) : RenderObject()

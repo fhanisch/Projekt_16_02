@@ -1,4 +1,4 @@
-#include <GL/gl.h>
+#include "ogl.hpp"
 #include "MeshGridObject.hpp"
 
 MeshGridObject::MeshGridObject(GLuint sp, Matrix4* cam, MeshGrid *mesh) : RenderObject()

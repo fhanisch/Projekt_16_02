@@ -5,7 +5,7 @@
 
 #include <iostream>
 #include <SDL/SDL.h>
-#include <GL/glew.h>
+#include "ogl.hpp"
 #include "Render.hpp"
 
 using namespace std;

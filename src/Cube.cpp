@@ -1,4 +1,4 @@
-#include <GL/gl.h>
+#include "ogl.hpp"
 #include "Cube.hpp"
 
 Cube::Cube(GLuint sp, Matrix4* cam) : RenderObject()

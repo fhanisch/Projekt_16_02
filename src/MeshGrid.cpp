@@ -1,5 +1,5 @@
 #include <cstdlib>
-#include <GL/gl.h>
+#include "ogl.hpp"
 #include "MeshGrid.hpp"
 
 MeshGrid::MeshGrid()
