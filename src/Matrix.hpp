@@ -7,6 +7,7 @@
 
 float *vecf(float start, float step, unsigned int count);
 unsigned int *veci(unsigned int start, unsigned int count);
+unsigned short *vecs(unsigned int start, unsigned int count);
 
 class Vec3
 {
