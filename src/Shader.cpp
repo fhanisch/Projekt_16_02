@@ -17,7 +17,7 @@ int Shader::loadShader(GLchar **shaderStr, char *fileName)
 	filesize=ftell(file);
 	rewind(file);	
 	*shaderStr = (GLchar*)malloc(filesize+1);
-	readElements = fread(*shaderStr,filesize,1,file);	
+	readElements = fread(*shaderStr,filesize,1,file);
 	(*shaderStr)[filesize]='\0';
 	fclose(file);
 

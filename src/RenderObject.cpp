@@ -1,5 +1,21 @@
+#include <iostream>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 #include "ogl.hpp"
 #include "RenderObject.hpp"
+
+using namespace std;
+
+void myStrCpy(char *dest, char *src)
+{
+    uint ptr=0;
+    while(src[ptr]!=0 && src[ptr]!=0x20 && src[ptr] != 0x0a)
+    {
+	dest[ptr] = src[ptr];
+	ptr++;
+    }
+}
 
 RenderObject::RenderObject()
 {
@@ -18,6 +34,99 @@ RenderObject::RenderObject()
   texID[0] = 0;
   texID[1] = 0; 
   mView = new Matrix4();
+}
+
+int RenderObject::loadModel(char* filename)
+{
+  uint filesize; 
+  char *buffer;
+  uint bufPtr;  
+  char str[20];
+  uint dataPtr;
+  boolean isVertices=false;
+  boolean isIndices=false;
+  uint verticesLen;  
+  FILE *file = fopen(filename,"r");
+
+  fseek(file,0,SEEK_END);
+  filesize=ftell(file);
+  rewind(file);
+  buffer = (char*)malloc(filesize);
+  fread(buffer,filesize,1,file);
+  cout << "Filesize: " << filesize << endl;
+  fclose(file);
+   
+  bufPtr=0;
+  dataPtr=0;
+  while ((filesize-strlen("vertices"))>bufPtr)
+  {
+      memset(str, 0, sizeof(str));
+      myStrCpy(str,buffer+bufPtr);      
+      if (!strcmp("vertices",str)) {isVertices=true; break;}
+      bufPtr++;      
+  }
+  if (isVertices)
+  {   
+    cout << str << endl;    
+    bufPtr+=strlen(str)+1;
+    
+    memset(str, 0, sizeof(str));
+    myStrCpy(str,buffer+bufPtr);
+    sscanf(str,"%d",&verticesLen);
+    cout << "Max Vertices = " << verticesLen << endl;
+    verticesSize = verticesLen*3*sizeof(GLfloat);
+    vertices = (GLfloat*)malloc(verticesSize);
+    bufPtr+=strlen(str)+1;
+    
+    while(buffer[bufPtr]!=';')
+    {
+      if (buffer[bufPtr]==0x20) bufPtr++;
+      if (buffer[bufPtr]==0x20) bufPtr++;
+      memset(str, 0, sizeof(str));
+      myStrCpy(str,buffer+bufPtr);
+      sscanf(str,"%f",vertices+dataPtr);
+      cout << vertices[dataPtr] << endl;
+      dataPtr++;
+      bufPtr+=strlen(str)+1;
+    }
+  }
+  
+  bufPtr=0;
+  dataPtr=0;
+  while ((filesize-strlen("indices"))>bufPtr)
+  {
+      memset(str, 0, sizeof(str));
+      myStrCpy(str,buffer+bufPtr);      
+      if (!strcmp("indices",str)) {isIndices=true; break;}
+      bufPtr++;      
+  }
+  if (isIndices)
+  {   
+    cout << str << endl;    
+    bufPtr+=strlen(str)+1;
+    
+    memset(str, 0, sizeof(str));
+    myStrCpy(str,buffer+bufPtr);
+    sscanf(str,"%d",&indicesLen);
+    cout << "Max Indices = " << indicesLen << endl;
+    indicesSize = indicesLen*sizeof(GLuint);
+    indices = (GLuint*)malloc(indicesSize);
+    bufPtr+=strlen(str)+1;
+    
+    while(buffer[bufPtr]!=';')
+    {
+      if (buffer[bufPtr]==0x20) bufPtr++;
+      if (buffer[bufPtr]==0x20) bufPtr++;
+      memset(str, 0, sizeof(str));
+      myStrCpy(str,buffer+bufPtr);
+      sscanf(str,"%d",indices+dataPtr);
+      cout << indices[dataPtr] << endl;
+      dataPtr++;
+      bufPtr+=strlen(str)+1;
+    }
+  }
+      
+  return 0;
 }
 
 

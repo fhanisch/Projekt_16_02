@@ -6,6 +6,8 @@
 #define WND_WIDTH 1920
 #define WND_HEIGHT 1080
 
+typedef unsigned int boolean;
+
 class RenderObject
 {
 public:
@@ -27,7 +29,8 @@ public:
   GLuint getVid() {return vID;}
   GLuint getIBOid() {return iboID;}
   GLuint getIndicesLen() {return indicesLen;}
-protected:  
+protected:
+  int loadModel(char *filename);
   void createVBO(GLenum bufferType, GLuint *bufferID, GLuint bufferSize, GLfloat *buffer);
   void initObj();  
 };
