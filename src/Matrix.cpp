@@ -63,6 +63,21 @@ Matrix4::Matrix4()
   identity();
 }
 
+void Matrix4::transpose()
+{
+  unsigned int i,j;
+  Matrix4 tmp = *this;
+  float *m = (float*)this;
+  float *t = (float*)&tmp;
+
+  for(i=0;i<4;i++)
+  {
+    for(j=0;j<4;j++)
+    {
+      m[i+4*j] = t[j+4*i];
+    }
+  }
+}
 
 void Matrix4::zeroMatrix()
 {

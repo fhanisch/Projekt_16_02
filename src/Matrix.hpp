@@ -37,6 +37,7 @@ public:
   Matrix4();
   void zeroMatrix();
   void identity();
+  void transpose();
   void scale(float s);
   void scale(float x, float y, float z);
   void translate(float x, float y, float z);
