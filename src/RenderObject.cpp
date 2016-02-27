@@ -44,8 +44,12 @@ int RenderObject::loadModel(char* filename)
   char str[20];
   uint dataPtr;
   boolean isVertices=false;
+  boolean isNormals=false;
+  boolean isTexCoords=false;
   boolean isIndices=false;
-  uint verticesLen;  
+  uint verticesLen;
+  uint normalsLen;
+  uint texCoordsLen;
   FILE *file = fopen(filename,"r");
 
   fseek(file,0,SEEK_END);
@@ -80,12 +84,82 @@ int RenderObject::loadModel(char* filename)
     
     while(buffer[bufPtr]!=';')
     {
-      if (buffer[bufPtr]==0x20) bufPtr++;
-      if (buffer[bufPtr]==0x20) bufPtr++;
+      if (buffer[bufPtr]==0x20 || buffer[bufPtr]==0x0a) bufPtr++;
+      if (buffer[bufPtr]==0x20 || buffer[bufPtr]==0x0a) bufPtr++;
       memset(str, 0, sizeof(str));
       myStrCpy(str,buffer+bufPtr);
       sscanf(str,"%f",vertices+dataPtr);
       cout << vertices[dataPtr] << endl;
+      dataPtr++;
+      bufPtr+=strlen(str)+1;
+    }
+  }
+  
+  bufPtr=0;
+  dataPtr=0;
+  while ((filesize-strlen("normals"))>bufPtr)
+  {
+      memset(str, 0, sizeof(str));
+      myStrCpy(str,buffer+bufPtr);      
+      if (!strcmp("normals",str)) {isNormals=true; break;}
+      bufPtr++;      
+  }
+  if (isNormals)
+  {   
+    cout << str << endl;    
+    bufPtr+=strlen(str)+1;
+    
+    memset(str, 0, sizeof(str));
+    myStrCpy(str,buffer+bufPtr);
+    sscanf(str,"%d",&normalsLen);
+    cout << "Max Vertices = " << normalsLen << endl;
+    normalsSize = normalsLen*3*sizeof(GLfloat);
+    normals = (GLfloat*)malloc(normalsSize);
+    bufPtr+=strlen(str)+1;
+    
+    while(buffer[bufPtr]!=';')
+    {
+      if (buffer[bufPtr]==0x20 || buffer[bufPtr]==0x0a) bufPtr++;
+      if (buffer[bufPtr]==0x20 || buffer[bufPtr]==0x0a) bufPtr++;
+      memset(str, 0, sizeof(str));
+      myStrCpy(str,buffer+bufPtr);
+      sscanf(str,"%f",normals+dataPtr);
+      cout << normals[dataPtr] << endl;
+      dataPtr++;
+      bufPtr+=strlen(str)+1;
+    }
+  }
+  
+  bufPtr=0;
+  dataPtr=0;
+  while ((filesize-strlen("texcoords"))>bufPtr)
+  {
+      memset(str, 0, sizeof(str));
+      myStrCpy(str,buffer+bufPtr);      
+      if (!strcmp("texcoords",str)) {isTexCoords=true; break;}
+      bufPtr++;      
+  }
+  if (isTexCoords)
+  {   
+    cout << str << endl;    
+    bufPtr+=strlen(str)+1;
+    
+    memset(str, 0, sizeof(str));
+    myStrCpy(str,buffer+bufPtr);
+    sscanf(str,"%d",&texCoordsLen);
+    cout << "Max Vertices = " << texCoordsLen << endl;
+    texCoordsSize = texCoordsLen*2*sizeof(GLfloat);
+    texCoords = (GLfloat*)malloc(texCoordsSize);
+    bufPtr+=strlen(str)+1;
+    
+    while(buffer[bufPtr]!=';')
+    {
+      if (buffer[bufPtr]==0x20 || buffer[bufPtr]==0x0a) bufPtr++;
+      if (buffer[bufPtr]==0x20 || buffer[bufPtr]==0x0a) bufPtr++;
+      memset(str, 0, sizeof(str));
+      myStrCpy(str,buffer+bufPtr);
+      sscanf(str,"%f",texCoords+dataPtr);
+      cout << texCoords[dataPtr] << endl;
       dataPtr++;
       bufPtr+=strlen(str)+1;
     }
@@ -115,8 +189,8 @@ int RenderObject::loadModel(char* filename)
     
     while(buffer[bufPtr]!=';')
     {
-      if (buffer[bufPtr]==0x20) bufPtr++;
-      if (buffer[bufPtr]==0x20) bufPtr++;
+      if (buffer[bufPtr]==0x20 || buffer[bufPtr]==0x0a) bufPtr++;
+      if (buffer[bufPtr]==0x20 || buffer[bufPtr]==0x0a) bufPtr++;
       memset(str, 0, sizeof(str));
       myStrCpy(str,buffer+bufPtr);
       sscanf(str,"%d",indices+dataPtr);

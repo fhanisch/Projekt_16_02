@@ -13,6 +13,7 @@ using namespace std;
 Render::Render(SDL_Event *e)
 {
   event = e;
+  frustum.setFrustum(0.25*(GLfloat)WND_WIDTH/(GLfloat)WND_HEIGHT,0.25,0.5,100.0);
 }
 
 
@@ -64,11 +65,15 @@ void Render::initRenderScene()
   stern->setZdir(-1.0f);
   stern->mModel.scale(0.35f);
   stern->mModel.translate(0.5f, 0.5f, 0.1f);
-  plane = new Plane(shader->boden_sp, camera, texBoden, texFliessen);
+  plane = new Model(shader->boden_sp, (char*)"../res/plane.geo", GL_TRIANGLE_STRIP);
+  plane->setFrustum(frustum);
+  plane->setCam(camera);
+  plane->set2Texture(texBoden, texFliessen);
   plane->mModel.scale(20.0f);  
-  cube = new Cube(shader->ads_per_fragment_sp, camera);
-  cube->mModel.translate(-10.0f, 1.0f, -10.0f);
-  cube->color = Vec4(0.0f, 1.0f, 1.0f, 1.0f);
+  cube = new Model(shader->ads_per_fragment_sp, (char*)"../res/cube.geo",TUERKIS,GL_QUADS);
+  cube->setFrustum(frustum);
+  cube->setCam(camera);
+  cube->mModel.translate(-10.0f, 1.0f, -10.0f);  
   sphere[0] = new MeshGridObject(shader->sphere_sp, camera, mesh);
   sphere[0]->mModel.translate(0.0f, 1.0f, -5.0f);
   sphere[1] = new MeshGridObject(shader->sphere_sp, camera, mesh);
