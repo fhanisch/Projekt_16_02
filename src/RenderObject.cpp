@@ -59,7 +59,8 @@ int RenderObject::loadModel(char* filename)
   fread(buffer,filesize,1,file);
   cout << "Filesize: " << filesize << endl;
   fclose(file);
-   
+
+  //read vertices
   bufPtr=0;
   dataPtr=0;
   while ((filesize-strlen("vertices"))>bufPtr)
@@ -95,6 +96,7 @@ int RenderObject::loadModel(char* filename)
     }
   }
   
+  //read normals
   bufPtr=0;
   dataPtr=0;
   while ((filesize-strlen("normals"))>bufPtr)
@@ -130,6 +132,7 @@ int RenderObject::loadModel(char* filename)
     }
   }
   
+  //read texCoords
   bufPtr=0;
   dataPtr=0;
   while ((filesize-strlen("texcoords"))>bufPtr)
@@ -165,6 +168,7 @@ int RenderObject::loadModel(char* filename)
     }
   }
   
+  //read indices
   bufPtr=0;
   dataPtr=0;
   while ((filesize-strlen("indices"))>bufPtr)
