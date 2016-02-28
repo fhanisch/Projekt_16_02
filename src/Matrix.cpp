@@ -28,7 +28,7 @@ unsigned int *veci(unsigned int start, unsigned int count)
 
 unsigned short *vecs(unsigned int start, unsigned int count)
 {
-	unsigned short i;
+	unsigned int i;
 	unsigned short *out = (unsigned short*)malloc(count*sizeof(unsigned short));
 	
 	for (i=0;i<count;i++) out[i] = start + i;
