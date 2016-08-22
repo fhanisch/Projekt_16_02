@@ -1,2 +1,2 @@
 mkdir build
-c++ -o build/test src/*.cpp -lSDL -lGL -lGLEW -lm
+c++ -o build/test src/*.cpp -lSDL -lGL -lGLEW
